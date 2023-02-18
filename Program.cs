@@ -1,70 +1,44 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿Console.Clear();
+Console.WriteLine("Введите предложение");
+string? userString = Console.ReadLine();
+string[] IncomingArray = userString.Split(' ');
+Console.WriteLine("Введите максимальную длину слова в предложении:");
+int maxLength = Convert.ToInt32(Console.ReadLine());
+// Создание нового массива shortArray с длинами слов не более maxLength
+string[] shortArray = FinalArray(IncomingArray);
+Console.WriteLine($"Итоговый массив с длинами слов не более {maxLength} символов");
+// Вывод результирующего массива shortArray
+PrintArray(shortArray);
 
-string[] array1 = null;
-                Console.WriteLine("Введите любое предложение:");
-                string stringNumber = Console.ReadLine().Trim();
-                if (!string.IsNullOrWhiteSpace(stringNumber))
-                    array1 = stringNumber.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-
-                    string strElements = Console.ReadLine();
-
-string[] LenSubString(int len, string str)
-
+// Метод для нахождения массива с элементами не более maxLength букв
+string[] FinalArray(string[] array)
 {
+    int length = array.Length;
+    string[] result = new string[length];
+    int count = 0;
 
-    string[] s = str.Split(' ');
-
-    if (s.Length == 0)
-
+    for (int i = 0; i < length; i++)
     {
-
-        string[] res = new string[0];
-
-        return res;
-
-    }
-
-    else
-
-    {
-
-        string result = "";
-
-        foreach (string item in s)
-
+        if (array[i].Length <= maxLength)
         {
-
-            if (item.Length <= len)
-
-            {
-
-                result += item + " ";
-
-            }
-
+            result[count] = array[i];
+            count++;
         }
-
-        string[] resultArr = result.Split(' ');
-
-        return resultArr;
-
     }
+    Array.Resize(ref result, count);
 
+    return result;
 }
-
-string[] array1 = null;
-                Console.WriteLine("Введите любое предложение:");
-                string stringNumber = Console.ReadLine().Trim();
-                if (!string.IsNullOrWhiteSpace(stringNumber))
-                    array1 = stringNumber.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                else continue;
-                Console.Clear();
-
-                string[] array2 = new string[array1.Length];
-                for (int i = 0; i < array1.Length; i++)
-                    if (array1[i].Length <= 3)
-                        array2[i] = array1[i];
-
-                Console.WriteLine($"Массив строк у которых длинна <=3: ");
-                Console.WriteLine(string.Join(" ", array2));
+// Метод для вывода результирующего массива
+void PrintArray(string[] array)
+{
+    if (array.Length == 0)
+    {
+        Console.WriteLine("Во введенной строке нет слов искомой длины");
+    }
+    else
+    {
+        Array.ForEach(array, (str) => Console.Write($"{str} "));
+        Console.WriteLine();
+    }
+}
